@@ -10,7 +10,9 @@ We use IntelliJ Idea Community, but feel free to use any other tool. After you m
 
 ## Working on the frontend
 
-Run `ng serve` in the frontend/ folder for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files. This should be enough for you to work on the frontend and for us to check the results. We already enabled CORS so you don't have any problem requesting API methods from the ng-served frontend.
+* You need a recent node/npm
+* cd to frontend/ and run `npm install`
+* Run `npm run start` (which will run "ng serve") for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files. This should be enough for you to work on the frontend and for us to check the results. We already enabled CORS so you don't have any problem requesting API methods from the ng-served frontend.
 
 ## Tasks
 
