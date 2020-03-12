@@ -31,4 +31,4 @@ and stays fixed after that to show how long it took to get the 3 results.
 
 ## Doubts?
 
-Contact avazquez@energy-tools.net
+Contact qfeixas@energy-tools.net
