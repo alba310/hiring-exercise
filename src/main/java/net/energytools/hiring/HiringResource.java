@@ -21,14 +21,18 @@ public class HiringResource {
     public ResponseEntity<CounterDTO> getCounter(HttpServletRequest request) {
         String requestType = request.getHeader("X-Request-Type");
         if (requestType != null && requestType.toLowerCase().equals("a")) {
+            counter += 1;
             log.info("Request of type A {}", counter);
             try {
                 Thread.sleep(2000);
             } catch (InterruptedException ignored) {}
-        } else {
-            log.info("Other type of request {}", counter);
+        }else if (requestType != null && requestType.toLowerCase().equals("b")) {
+            counter += 1;
+            log.info("Request type B {}", counter);
+        }else if (requestType != null && requestType.toLowerCase().equals("c") ) {
+            counter += 1;
+            log.info("Request type C {}", counter);
         }
-        counter += 1;
         return ResponseEntity.ok(new CounterDTO(counter));
     }
 

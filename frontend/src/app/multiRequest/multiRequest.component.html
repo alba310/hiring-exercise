@@ -1,1 +1,10 @@
-<h2>Your view here <span class="danger">{{ lastValue }}</span></h2>
+<div class="content">
+  <div class="cent">
+    <h2>Your view here </h2>
+    <input type="text" class="danger" value="{{ lastValue }}"/>
+    <input type="text" class="danger" value="{{ lastValue2 }}"/>
+    <input type="text" class="danger" value="{{ lastValue3 }}"/><br>
+    <button  (click)="recalcular()" >reload </button>
+  </div>
+
+</div>
