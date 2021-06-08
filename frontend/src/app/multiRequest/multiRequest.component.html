@@ -4,7 +4,9 @@
     <input type="text" class="danger" value="{{ lastValue }}"/>
     <input type="text" class="danger" value="{{ lastValue2 }}"/>
     <input type="text" class="danger" value="{{ lastValue3 }}"/><br>
-    <button  (click)="recalcular()" >reload </button>
+    <button  (click)="recalcular()" >reload </button> <br>
+    <button nbButton status="success" (click)="showSpinner()">Start Spinner</button>
   </div>
 
 </div>
+<ngx-spinner></ngx-spinner>

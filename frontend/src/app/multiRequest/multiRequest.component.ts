@@ -1,16 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-//import { NgxSpinnerService } from "ngx-spinner";
 import { getQueryValue } from '@angular/core/src/view/query';
-import { Subscription } from 'rxjs';
+//import { Subscription } from 'rxjs';
 import {Injectable} from '@angular/core';
+import { NgxSpinnerService } from "ngx-spinner";
 import {Http, Headers} from '@angular/http';
 
 
 interface ICounterDTO {
     value: number;
 }
-
 
 @Component({
   selector: 'app-multi-request',
@@ -24,8 +23,8 @@ export class MultiRequestComponent implements OnInit {
     public lastValue3 = 0;
     public resultat= 0;
 
-    //constructor(private spinner: NgxSpinnerService) {}
-    constructor(private http: HttpClient) {}
+    constructor(private spinner: NgxSpinnerService,private http: HttpClient) {}
+
 
     ngOnInit() {
        // this.spinner.show();
@@ -33,6 +32,12 @@ export class MultiRequestComponent implements OnInit {
         this.recalcular();
 
     }
+     showSpinner() {
+        this.spinner.show();
+        setTimeout(() => {
+          this.spinner.hide();
+        }, 3000);
+      }
 
      delay(ms: number) {
         return new Promise( resolve => setTimeout(resolve, ms) );
@@ -55,7 +60,7 @@ export class MultiRequestComponent implements OnInit {
             console.log(result.value);
             if(tipus=='a'){
               this.lastValue= result.value;
-              console.log("hola"+this.lastValue);
+              console.log(this.lastValue);
             }
             if(tipus=='b'){
               this.lastValue2= result.value;

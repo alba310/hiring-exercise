@@ -7,6 +7,11 @@
     width:100px;
     padding:8px;
 }
+[nbButton] {
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+  width:20%;
+}
 
 h2{
 font-style: oblique;
