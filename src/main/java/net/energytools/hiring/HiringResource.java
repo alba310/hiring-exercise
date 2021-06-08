@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Objects;
 
 @RestController
 @RequestMapping(value = "/api/hiring", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -22,7 +23,7 @@ public class HiringResource {
     @RequestMapping(value = "/counter", method = RequestMethod.GET)
     public ResponseEntity<CounterDTO> getCounter(HttpServletRequest request) {
         String requestType = request.getHeader("X-Request-Type");
-        if (requestType != null && requestType.toLowerCase().equals("a")) {
+        if (!Objects.isNull(requestType) && ("a").equalsIgnoreCase(requestType)){
 
             log.info("Request of type A {}", counterA);
 
