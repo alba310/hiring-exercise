@@ -1,12 +1,25 @@
 <div class="content">
-  <div class="cent">
+  <div class="textCenter">
     <h2>Your view here </h2>
-    <input type="text" class="danger" value="{{ lastValue }}"/>
-    <input type="text" class="danger" value="{{ lastValue2 }}"/>
-    <input type="text" class="danger" value="{{ lastValue3 }}"/><br>
-    <button  (click)="recalcular()" >reload </button> <br>
-    <button nbButton status="success" (click)="showSpinner()">Start Spinner</button>
+
+    <div  *ngFor="let request of requests">
+      <label>{{request.type}} :</label>
+      <input type="text" class="danger textCenter redb" disabled value="{{request.value}}"/>
+    </div>
+
+
+
+    <button  (click)="fetchValue()" >Reload </button> <br>
+
+    <p>loadtime:</p>
+    <p class="danger"> {{timer}}  </p>
+
   </div>
+  <ngx-spinner bdColor = "rgb(85, 87, 89)" size = "medium" color = "rgb(247, 50, 63)" type = "ball-fussion" [fullScreen] = "true">
+      <p style="color: white" >
+        Loading...
+      </p>
+  </ngx-spinner>
 
 </div>
-<ngx-spinner></ngx-spinner>
+

@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { getQueryValue } from '@angular/core/src/view/query';
-//import { Subscription } from 'rxjs';
-import {Injectable} from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { delay, concatMap, tap, } from 'rxjs/operators';
+import { timer } from 'rxjs';
 import { NgxSpinnerService } from "ngx-spinner";
-import {Http, Headers} from '@angular/http';
 
 
 interface ICounterDTO {
@@ -18,59 +17,58 @@ interface ICounterDTO {
 })
 export class MultiRequestComponent implements OnInit {
     private backendUrl = 'http://localhost:8080/api/hiring/counter';
-    public lastValue = 0;
-    public lastValue2 = 0;
-    public lastValue3 = 0;
-    public resultat= 0;
+        public lastValue = 0;
+        public timer = 0;
+        public requests = [];
 
-    constructor(private spinner: NgxSpinnerService,private http: HttpClient) {}
 
+
+
+    constructor(
+      private spinner: NgxSpinnerService,
+      private http: HttpClient
+    ) {}
 
     ngOnInit() {
-       // this.spinner.show();
-        console.log('Your code here');
-        this.recalcular();
-
+        this.fetchValue();
     }
-     showSpinner() {
-        this.spinner.show();
-        setTimeout(() => {
-          this.spinner.hide();
-        }, 3000);
-      }
 
      delay(ms: number) {
         return new Promise( resolve => setTimeout(resolve, ms) );
       }
 
-      async recalcular(){
 
-       this.fetchValue('a');
-       await this.delay(100);
-       this.fetchValue('b');
-       await this.delay(100);
-       this.fetchValue('c');
+     public fetchValue(): void {
+
+        const source = timer(0,3);
+        const subscribe = source.subscribe(
+            value => this.timer = value,
+        );
+
+        this.spinner.show();
+        this.requests = [];
+        this.http.get(this.backendUrl, { headers: new HttpHeaders({ 'X-Request-Type': 'A' }) })
+            .pipe(delay(100),
+                tap((res: ICounterDTO) => {
+                    this.requests.push({ type: "A", value: res.value })
+                }),
+                concatMap(() => this.http.get(this.backendUrl, { headers: new HttpHeaders({ 'X-Request-Type': 'B' }) })
+                    .pipe(delay(100))),
+                tap((res: ICounterDTO) => {
+                    this.requests.push({ type: "B", value: res.value })
+                }),
+                concatMap(() => this.http.get(this.backendUrl, { headers: new HttpHeaders({ 'X-Request-Type': 'C' }) })
+                    .pipe(delay(100))),
+                tap((res: ICounterDTO) => {
+                    this.requests.push({ type: "C", value: res.value })
+                    this.spinner.hide();
+                    setTimeout(() => { subscribe.unsubscribe(); }, 0);
+                }),
+            ).subscribe();
+
+
       }
-     public fetchValue(tipus:string): void {
-
-       const headers = { 'X-Request-Type': tipus}
-
-       this.http.get(this.backendUrl,{headers}).subscribe((result: ICounterDTO) => {
-
-            console.log(result.value);
-            if(tipus=='a'){
-              this.lastValue= result.value;
-              console.log(this.lastValue);
-            }
-            if(tipus=='b'){
-              this.lastValue2= result.value;
-            }
-            if(tipus=='c'){
-              this.lastValue3= result.value;
-            }
-
-        });
 
 
-      }
+
 }

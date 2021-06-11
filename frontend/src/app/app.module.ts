@@ -4,7 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { MultiRequestComponent } from './multiRequest/multiRequest.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-//import { NgxSpinnerModule } from "ngx-spinner";
+import { NgxSpinnerModule } from "ngx-spinner";
 
 @NgModule({
 
@@ -16,7 +16,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    //NgxSpinnerModule,
+    NgxSpinnerModule,
   ],
 
   providers: [],

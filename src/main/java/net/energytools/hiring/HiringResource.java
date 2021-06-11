@@ -14,38 +14,36 @@ import java.util.Objects;
 @RestController
 @RequestMapping(value = "/api/hiring", produces = MediaType.APPLICATION_JSON_VALUE)
 public class HiringResource {
+
     private int counter = 0;
-    private int counterA = 1;
-    private int counterB = 2;
-    private int counterC = 3;
+    private String ABC = "A";
+
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @RequestMapping(value = "/counter", method = RequestMethod.GET)
-    public ResponseEntity<CounterDTO> getCounter(HttpServletRequest request) {
-        String requestType = request.getHeader("X-Request-Type");
-        if (!Objects.isNull(requestType) && ("a").equalsIgnoreCase(requestType)){
+    public ResponseEntity<CounterDTO> getCounter(final HttpServletRequest request) {
+        final String requestType = request.getHeader("X-Request-Type");
+        if (!Objects.isNull(requestType) && ("a").equalsIgnoreCase(requestType) && ABC == "A") {
+            counter += 1;
+            ABC = "B";
 
-            log.info("Request of type A {}", counterA);
-
+            log.info("Request type A {}", counter);
             try {
                 Thread.sleep(2000);
-                counter=counterA;
-                counterA += 3;
-            } catch (InterruptedException ignored) {}
+            } catch (final InterruptedException ignored) {
+            }
 
+        }else if (!Objects.isNull(requestType) && ("b").equalsIgnoreCase(requestType) && ABC == "B") {
+            counter += 1;
+            ABC = "C";
 
-        }else if (requestType != null && requestType.toLowerCase().equals("b")) {
-            counter=counterB;
-            log.info("Request type B {}", counterB);
-            counterB += 3;
+            log.info("Request type B {}", counter);
+        }else if (!Objects.isNull(requestType) && ("c").equalsIgnoreCase(requestType)&& ABC == "C") {
+            counter += 1;
+            ABC = "A";
 
-        }else if (requestType != null && requestType.toLowerCase().equals("c") ) {
-            counter=counterC;
-            log.info("Request type C {}", counterC);
-            counterC += 3;
-
+            log.info("Request type C {}", counter);
         }
         return ResponseEntity.ok(new CounterDTO(counter));
     }
-
 }
